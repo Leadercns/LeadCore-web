@@ -396,6 +396,30 @@
             border-radius: 12px;
             border-left: 4px solid #dc2626;
         }
+        .empty-state {
+            text-align: center;
+            padding: 80px 0;
+            color: #64748b;
+        }
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            stroke: #94a3b8;
+            stroke-width: 1.5;
+            fill: none;
+            margin-bottom: 20px;
+        }
+        .empty-state h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
+            border-bottom: none;
+        }
+        .empty-state p {
+            font-size: 18px;
+            color: #94a3b8;
+        }
 
         /* ===== 移动端 ===== */
         @media (max-width: 900px) {
@@ -429,6 +453,15 @@
             }
             .sidebar .level-2 {
                 padding-left: 56px;
+            }
+            .empty-state {
+                padding: 40px 0;
+            }
+            .empty-state h1 {
+                font-size: 24px;
+            }
+            .empty-state p {
+                font-size: 16px;
             }
         }
         @media (max-width: 640px) {
@@ -662,6 +695,26 @@
                 return null;
             }
 
+            // 显示空状态（API 开发中）
+            function showEmptyState() {
+                var sidebarContainer = document.getElementById('sidebar');
+                var contentContainer = document.getElementById('content');
+
+                // 清空侧边栏，只保留标题
+                var title = sidebarContainer.querySelector('.sidebar-title');
+                sidebarContainer.innerHTML = '';
+                sidebarContainer.appendChild(title);
+
+                // 显示空状态
+                contentContainer.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 22v-4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M22 12h-4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="10"/></svg>
+                        <h1>API 正在开发中</h1>
+                        <p>当前暂无可用接口文档，敬请期待。</p>
+                    </div>
+                `;
+            }
+
             // 加载根目录的 docx.json
             function loadDocs() {
                 var sidebarContainer = document.getElementById('sidebar');
@@ -673,6 +726,12 @@
                         return res.json();
                     })
                     .then(function(data) {
+                        // 如果数据为空或 children 为空，显示空状态
+                        if (!data || !data.children || data.children.length === 0) {
+                            showEmptyState();
+                            return;
+                        }
+
                         // 清空侧边栏（保留标题）
                         var title = sidebarContainer.querySelector('.sidebar-title');
                         sidebarContainer.innerHTML = '';
@@ -696,14 +755,14 @@
                                 }
                             });
                         } else {
-                            contentContainer.innerHTML = '<h1>欢迎</h1><p>API 文档加载成功，请从左侧选择具体接口。</p>';
+                            // 没有找到可显示节点，也显示空状态
+                            showEmptyState();
                         }
                     })
                     .catch(function(err) {
-                        contentContainer.innerHTML = '<div class="error-msg"><strong>加载文档失败</strong><br>' +
-                            err.message +
-                            '<br><br>请确认 docx.json 文件存在于服务器根目录，且通过 HTTP 协议访问。</div>';
-                        console.error(err);
+                        // 如果文件不存在或加载失败，也显示“开发中”而不是报错
+                        showEmptyState();
+                        console.warn('docx.json 加载失败，显示开发中状态:', err);
                     });
             }
 
