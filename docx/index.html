@@ -500,7 +500,6 @@
                 <li><a href="#">首页</a></li>
                 <li><a href="#" class="active">API 文档</a></li>
                 <li><a href="#">SDK 下载</a></li>
-                <li><a href="#" class="nav-cta">控制台</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="菜单">
                 <span></span>
@@ -561,7 +560,7 @@
             });
 
             // ================================================================
-            //  渲染引擎（数据从服务器 docs.json 加载）
+            //  渲染引擎（从根目录 /docx.json 加载数据）
             // ================================================================
             var sidebar = document.getElementById('sidebar');
             var content = document.getElementById('content');
@@ -663,14 +662,14 @@
                 return null;
             }
 
-            // 加载 docs.json
+            // 加载根目录的 docx.json
             function loadDocs() {
                 var sidebarContainer = document.getElementById('sidebar');
                 var contentContainer = document.getElementById('content');
 
-                fetch('docs.json')
+                fetch('/docx.json')
                     .then(function(res) {
-                        if (!res.ok) throw new Error('无法加载 docs.json (HTTP ' + res.status + ')');
+                        if (!res.ok) throw new Error('无法加载 docx.json (HTTP ' + res.status + ')');
                         return res.json();
                     })
                     .then(function(data) {
@@ -703,7 +702,7 @@
                     .catch(function(err) {
                         contentContainer.innerHTML = '<div class="error-msg"><strong>加载文档失败</strong><br>' +
                             err.message +
-                            '<br><br>请确认 docs.json 文件存在于服务器根目录，且通过 HTTP 协议访问。</div>';
+                            '<br><br>请确认 docx.json 文件存在于服务器根目录，且通过 HTTP 协议访问。</div>';
                         console.error(err);
                     });
             }
