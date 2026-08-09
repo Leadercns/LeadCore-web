@@ -5,6 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>LeadCore</title>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .container {
+            text-align: center;
+        }
+        .platform-grid,
+        .features-grid,
+        .download-group {
+            justify-content: center;
+        }
+        .platform-card,
+        .feature-card {
+            text-align: center;
+        }
+        .hero-content {
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        .hero-buttons {
+            justify-content: center;
+        }
+        .section-desc {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 500px;
+            margin: 40px auto 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .download-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+        @media (max-width: 640px) {
+            .platform-grid {
+                grid-template-columns: 1fr 1fr;
+                max-width: 100%;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -19,7 +73,6 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#platforms">平台</a></li>
                 <li><a href="#features">特性</a></li>
-                <li><a href="#tech-stack">技术栈</a></li>
                 <li><a href="#cta" class="nav-cta">免费使用</a></li>
                 <li>
                     <span class="nav-voice-trigger" id="voiceTrigger">
@@ -57,7 +110,6 @@
                     </a>
                 </div>
             </div>
-            
         </div>
     </section>
 
@@ -139,7 +191,6 @@
         </div>
     </section>
 
-
     <section class="cta" id="cta">
         <div class="container">
             <h2>开始使用</h2>
@@ -156,12 +207,7 @@
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
                     网页端使用
                 </a>
-                <a href="#" target="_blank" class="btn-secondary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z"/><path d="M3 9l3-6h12l3 6"/></svg>
-                    后台管理
-                </a>
             </div>
-            
         </div>
     </section>
 
